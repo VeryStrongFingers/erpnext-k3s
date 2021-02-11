@@ -31,9 +31,10 @@ helm install erpnext --namespace erpnext frappe/erpnext --version 2.0.11 -f http
 
 # erpnext site
 kubectl apply --namespace erpnext  -f https://raw.githubusercontent.com/VeryStrongFingers/erpnext-k3s/master/kube-resources/create-site-job.yaml \
-  && kubectl wait --namespace erpnext --for=condition=complete jobs/create-erp-site --timeout=120s
+  && kubectl wait --namespace erpnext --for=condition=complete jobs/create-erp-site --timeout=120s \
+  && kubectl logs --namespace erpnext -f job/create-erp-site
 
 # ingress routing
-kubectl apply -n erpnext -f https://raw.githubusercontent.com/VeryStrongFingers/erpnext-k3s/master/kube-resources/site-ingress.yaml
+kubectl apply --namespace erpnext erpnext -f https://raw.githubusercontent.com/VeryStrongFingers/erpnext-k3s/master/kube-resources/site-ingress.yaml
 ```
 
