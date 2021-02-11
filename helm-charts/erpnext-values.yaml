@@ -1,0 +1,7 @@
+replicaCount: 0
+
+mariadbHost: "mariadb.mariadb.svc.cluster.local"
+
+persistence:
+  enabled: false
+  existingClaim: "erpnext-pvc"
