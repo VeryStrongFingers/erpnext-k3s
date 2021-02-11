@@ -1,6 +1,6 @@
 ### If you'd rather blindly copy+paste to get it running ASAP, see below
 
-Post https://verystrongfingers.github.io/erpnext/2021/01/31/erpnext-k3s.html
+Post https://verystrongfingers.github.io/erpnext/2021/02/11/erpnext-k3s.html
 
 ## Tooling
 ```bash
