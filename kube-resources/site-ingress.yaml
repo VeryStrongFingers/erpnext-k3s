@@ -1,7 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: minimal-ingress
+  name: our-site-ingress
+  namespace: erpnext
   annotations:
     ingress.kubernetes.io/ssl-redirect: "false"
 spec:

@@ -14,7 +14,9 @@ helm repo update
 
 ```bash
 # k3s cluster creation
-k3d cluster create strong-erpnext -v /opt/local-path-provisioner:/opt/local-path-provisioner
+docker volume create erpnext-persistence
+
+k3d cluster create strong-erpnext --volume erpnext-persistence:/opt/local-path-provisioner@server[0]
 kubectl config use-context strong-erpnext
 
 # create nameservers
@@ -22,12 +24,12 @@ kubectl create ns mariadb
 kubectl create ns erpnext
 
 # pvc & required charts
-kubectl apply -n erpnext -f https://raw.githubusercontent.com/VeryStrongFingers/erpnext-k3s/master/kube-resources/pvc.yaml
-helm install mariadb -n mariadb bitnami/mariadb -f maria-db-values.yaml
-helm install erpnext --namespace erpnext frappe/erpnext --version 2.0.11 -f values.yaml
+kubectl apply -f https://raw.githubusercontent.com/VeryStrongFingers/erpnext-k3s/master/kube-resources/pvc.yaml
+helm install mariadb --namespace mariadb bitnami/mariadb --version 9.3.1 -f https://raw.githubusercontent.com/VeryStrongFingers/erpnext-k3s/master/helm-charts/maria-db-values.yaml --wait
+helm install erpnext --namespace erpnext frappe/erpnext --version 2.0.11 -f https://raw.githubusercontent.com/VeryStrongFingers/erpnext-k3s/master/helm-charts/erpnext-values.yaml --wait
 
 # erpnext site & ingress
-kubectl apply -f https://raw.githubusercontent.com/VeryStrongFingers/erpnext-k3s/master/kube-resources/create-site-job.yaml && kubectl wait --for=condition=complete job/site
-kubectl apply -f https://raw.githubusercontent.com/VeryStrongFingers/erpnext-k3s/master/kube-resources/site-ingress.yaml
+kubectl apply -n erpnext -f https://raw.githubusercontent.com/VeryStrongFingers/erpnext-k3s/master/kube-resources/create-site-job.yaml && kubectl wait --for=condition=complete job/site
+kubectl apply -n erpnext -f https://raw.githubusercontent.com/VeryStrongFingers/erpnext-k3s/master/kube-resources/site-ingress.yaml
 ```
 
