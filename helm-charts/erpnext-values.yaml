@@ -1,4 +1,4 @@
-replicaCount: 0
+replicaCount: 1
 
 mariadbHost: "mariadb.mariadb.svc.cluster.local"
 

@@ -25,11 +25,15 @@ kubectl create ns erpnext
 
 # pvc & required charts
 kubectl apply -f https://raw.githubusercontent.com/VeryStrongFingers/erpnext-k3s/master/kube-resources/pvc.yaml
+kubectl apply -f https://raw.githubusercontent.com/VeryStrongFingers/erpnext-k3s/master/kube-resources/erpnext-db-secret.yaml
 helm install mariadb --namespace mariadb bitnami/mariadb --version 9.3.1 -f https://raw.githubusercontent.com/VeryStrongFingers/erpnext-k3s/master/helm-charts/maria-db-values.yaml --wait
 helm install erpnext --namespace erpnext frappe/erpnext --version 2.0.11 -f https://raw.githubusercontent.com/VeryStrongFingers/erpnext-k3s/master/helm-charts/erpnext-values.yaml --wait
 
-# erpnext site & ingress
-kubectl apply -n erpnext -f https://raw.githubusercontent.com/VeryStrongFingers/erpnext-k3s/master/kube-resources/create-site-job.yaml && kubectl wait --for=condition=complete job/site
+# erpnext site
+kubectl apply --namespace erpnext  -f https://raw.githubusercontent.com/VeryStrongFingers/erpnext-k3s/master/kube-resources/create-site-job.yaml \
+  && kubectl wait --namespace erpnext --for=condition=complete jobs/create-erp-site --timeout=120s
+
+# ingress routing
 kubectl apply -n erpnext -f https://raw.githubusercontent.com/VeryStrongFingers/erpnext-k3s/master/kube-resources/site-ingress.yaml
 ```
 
