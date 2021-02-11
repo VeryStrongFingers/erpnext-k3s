@@ -13,6 +13,9 @@ curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bas
 k3d cluster create strong-erpnext -v /opt/local-path-provisioner:/opt/local-path-provisioner
 kubectl config use-context strong-erpnext
 
+kubectl create ns mariadb
+kubectl create ns erpnext
+
 # clone 
 git clone ssh://...
 cd bleh
