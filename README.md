@@ -2,11 +2,15 @@
 
 Post https://verystrongfingers.github.io/erpnext/2021/01/31/erpnext-k3s.html
 
+## Tooling
 ```bash
 curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
 curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-```
 
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo add frappe https://helm.erpnext.com
+helm repo update
+```
 
 ```bash
 # k3s cluster creation
@@ -18,9 +22,9 @@ kubectl create ns mariadb
 kubectl create ns erpnext
 
 # pvc & required charts
-kubectl apply -f https://raw.githubusercontent.com/VeryStrongFingers/erpnext-k3s/master/kube-resources/pvc.yaml
+kubectl apply -n erpnext -f https://raw.githubusercontent.com/VeryStrongFingers/erpnext-k3s/master/kube-resources/pvc.yaml
 helm install mariadb -n mariadb bitnami/mariadb -f maria-db-values.yaml
-helm install frappe-bench-2 --namespace erpnext frappe/erpnext --version 2.0.11 -f values.yaml
+helm install erpnext --namespace erpnext frappe/erpnext --version 2.0.11 -f values.yaml
 
 # erpnext site & ingress
 kubectl apply -f https://raw.githubusercontent.com/VeryStrongFingers/erpnext-k3s/master/kube-resources/create-site-job.yaml && kubectl wait --for=condition=complete job/site
