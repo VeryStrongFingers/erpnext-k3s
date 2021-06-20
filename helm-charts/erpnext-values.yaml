@@ -4,10 +4,10 @@ mariadbHost: "mariadb.mariadb.svc.cluster.local"
 
 persistence:
   worker:
-    enabled: false
+    enabled: true
     existingClaim: "erpnext-worker"
     storageClass: "local-path"
   logs:
-    enabled: false
+    enabled: true
     existingClaim: "erpnext-logs"
     storageClass: "local-path"
