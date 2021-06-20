@@ -3,7 +3,22 @@ kind: PersistentVolumeClaim
 metadata:
   labels:
     app: erpnext
-  name: erpnext-pvc
+  name: erpnext-worker
+  namespace: erpnext
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 4Gi
+  storageClassName: local-path
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: erpnext
+  name: erpnext-logs
   namespace: erpnext
 spec:
   accessModes:
