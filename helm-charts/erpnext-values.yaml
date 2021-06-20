@@ -3,10 +3,6 @@ replicaCount: 1
 mariadbHost: "mariadb.mariadb.svc.cluster.local"
 
 persistence:
-  enabled: false
-  existingClaim: "erpnext-pvc"
-
-persistence:
   worker:
     enabled: false
     existingClaim: "erpnext-worker"
