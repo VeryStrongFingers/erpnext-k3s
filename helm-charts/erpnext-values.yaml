@@ -5,3 +5,13 @@ mariadbHost: "mariadb.mariadb.svc.cluster.local"
 persistence:
   enabled: false
   existingClaim: "erpnext-pvc"
+
+persistence:
+  worker:
+    enabled: false
+    existingClaim: "erpnext-worker"
+    storageClass: "local-path"
+  logs:
+    enabled: false
+    existingClaim: "erpnext-logs"
+    storageClass: "local-path"
